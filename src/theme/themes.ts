@@ -9,6 +9,7 @@ export interface ThemeDef {
 
 /** 内置官方主题（第三方主题系统在 Phase 12 接入） */
 export const BUILTIN_THEMES: ThemeDef[] = [
+  { id: 'ios-dark', name: 'iOS 深色', emoji: '📱', appearance: 'dark', preview: ['#1c1c1e', '#2c2c2e', '#ff9f0a'] },
   { id: 'minimal-light', name: '极简白', emoji: '🤍', appearance: 'light', preview: ['#f5f6f8', '#ffffff', '#2160d3'] },
   { id: 'violet-dark', name: '深紫', emoji: '🌌', appearance: 'dark', preview: ['#16131d', '#201b2b', '#9080f2'] },
   { id: 'oled-black', name: 'OLED 黑', emoji: '🖤', appearance: 'dark', preview: ['#000000', '#0d0d10', '#4d8dff'] },
@@ -40,7 +41,7 @@ export function themeExists(id: string): boolean {
 
 /** 应用主题到 <html data-theme>，并同步移动端地址栏颜色 */
 export function applyTheme(id: string, animations = true): void {
-  const themeId = themeExists(id) ? id : 'minimal-light'
+  const themeId = themeExists(id) ? id : 'ios-dark'
   document.documentElement.dataset.theme = themeId
   document.documentElement.dataset.motion = animations ? 'on' : 'off'
 

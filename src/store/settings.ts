@@ -33,7 +33,7 @@ interface SettingsState {
 export const useSettings = create<SettingsState>()(
   persist(
     (set) => ({
-      themeId: 'minimal-light',
+      themeId: 'ios-dark',
       mode: 'simple',
       angle: 'deg',
       fontScale: 1,

@@ -290,6 +290,100 @@ html[data-theme='minimal-light'] .calc-note {
   font-size: 1rem;
 }
 
+/* ---------- iOS 主题专用样式 ---------- */
+html[data-theme='ios-dark'] .keypad {
+  gap: 0.5rem;
+}
+html[data-theme='ios-dark'] .key {
+  border-radius: 999px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.25);
+  border: 1px solid rgb(255 255 255 / 0.08);
+}
+html[data-theme='ios-dark'] .key.num {
+  background: #333336;
+}
+html[data-theme='ios-dark'] .key-op {
+  background: var(--key-fn);
+  color: #ffffff;
+  font-size: clamp(1.5rem, 5vw, 1.8rem);
+}
+html[data-theme='ios-dark'] .key-eq {
+  background: var(--ok);
+  color: #ffffff;
+}
+html[data-theme='ios-dark'] .key-danger {
+  background: #48484a;
+  color: #ff453a;
+}
+html[data-theme='ios-dark'] .key-move {
+  background: #3a3a3c;
+  color: var(--text-2);
+  border: 1px solid rgb(255 255 255 / 0.06);
+}
+html[data-theme='ios-dark'] .key:hover {
+  background: #48484a;
+}
+html[data-theme='ios-dark'] .k-chip {
+  border-radius: 999px;
+  background: #2c2c2e;
+  border-color: #3a3a3c;
+}
+html[data-theme='ios-dark'] .pro-grid .key {
+  border-radius: var(--radius-s);
+}
+html[data-theme='ios-dark'] .pro-subjects {
+  background: #1c1c1e;
+}
+html[data-theme='ios-dark'] .pro-subjects button[aria-selected='true'] {
+  background: #3a3a3c;
+  color: #fff;
+}
+html[data-theme='ios-dark'] .pro-tabs button[aria-selected='true'] {
+  background: #3a3a3c;
+  color: #fff;
+}
+html[data-theme='ios-dark'] .calc-input {
+  color: #ffffff;
+  font-size: 1.5rem;
+}
+
+/* ---------- 键盘弹出动画 ---------- */
+.keypad-pop {
+  will-change: opacity, transform;
+  animation: keypadSlideIn var(--dur-med) var(--ease-out) both;
+  transform-origin: top center;
+}
+.keypad-visible {
+  animation: keypadSlideIn var(--dur-med) var(--ease-spring) both;
+}
+@keyframes keypadSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(18px) scale(0.97);
+    filter: blur(4px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-2px) scale(1.005);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .keypad-pop,
+  .keypad-visible {
+    animation: none !important;
+  }
+}
+html[data-motion='off'] .keypad-pop,
+html[data-motion='off'] .keypad-visible {
+  animation: none !important;
+}
+
 /* ---------- 主键盘：经典计算器布局 ---------- */
 .keypad {
   display: grid;

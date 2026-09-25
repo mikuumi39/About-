@@ -42,6 +42,7 @@ export default function CalcView() {
 
   const [input, setInput] = useState('')
   const [committed, setCommitted] = useState<CalcOutcome | null>(null)
+  const [keypadVisible, setKeypadVisible] = useState(true)
   const inputRef = useRef<HTMLInputElement>(null)
   const justEvaluated = useRef(false)
   const undoStack = useRef<string[]>([])
@@ -59,6 +60,17 @@ export default function CalcView() {
         el.setSelectionRange(pos, pos)
       }
     })
+  }, [])
+
+  // 点击输入框和键盘以外的区域时隐藏键盘
+  useEffect(() => {
+    const onDocClick = (e: MouseEvent) => {
+      const t = e.target as HTMLElement
+      if (t.closest('.calc-input-box') || t.closest('.keypad-host')) return
+      setKeypadVisible(false)
+    }
+    document.addEventListener('click', onDocClick)
+    return () => document.removeEventListener('click', onDocClick)
   }, [])
 
   // 接收公式编辑器「发送到计算器」的内容（仅挂载时消费一次）
@@ -376,6 +388,7 @@ export default function CalcView() {
           onFocus={(e) => {
             // 软键盘弹起时确保输入框可见（jsdom 等环境无此 API）
             e.target.scrollIntoView?.({ block: 'nearest' })
+            setKeypadVisible(true)
           }}
           placeholder="输入算式，如 1/2+1/3、√25、2x+3=7"
           enterKeyHint="done"
@@ -415,7 +428,9 @@ export default function CalcView() {
       </div>
 
       {/* 键盘 */}
-      <Keypad pro={mode === 'pro'} onKey={handleKey} />
+      <div className={`keypad-pop ${keypadVisible ? 'keypad-visible' : ''}`}>
+        <Keypad pro={mode === 'pro'} onKey={handleKey} />
+      </div>
 
       <HistorySection
         onPick={(expr) => {

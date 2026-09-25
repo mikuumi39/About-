@@ -1,3 +1,31 @@
+
+/* ---------------- 📱 iOS 深色（仿 iPhone 计算器） ---------------- */
+html[data-theme='ios-dark'] {
+  color-scheme: dark;
+  --bg: #1c1c1e;
+  --panel: #2c2c2e;
+  --panel-2: #3a3a3c;
+  --border: #3a3a3c;
+  --text: #ffffff;
+  --text-2: #8e8e93;
+  --text-3: #636366;
+  --accent: #ff9f0a;
+  --accent-text: #ffffff;
+  --accent-weak: #3a3a3c;
+  --danger: #ff453a;
+  --danger-weak: #3d2022;
+  --ok: #30d158;
+  --warn: #ffd60a;
+  --warn-weak: #3a3320;
+  --key: #333336;
+  --key-hover: #48484a;
+  --key-active: #565658;
+  --key-fn: #ff9f0a;
+  --backdrop: rgb(0 0 0 / 0.6);
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.3);
+  --shadow-2: 0 8px 28px rgb(0 0 0 / 0.5);
+}
+
 /* ============================================================
    简算 · 设计令牌
    结构性令牌放 :root（不随主题变化）；

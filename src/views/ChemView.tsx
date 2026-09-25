@@ -84,6 +84,7 @@ export default function ChemView() {
 function ChemEditor() {
   const [input, setInput] = useState('')
   const [suggestion, setSuggestion] = useState<BalanceSuggestion | null>(null)
+  const [keypadVisible, setKeypadVisible] = useState(true)
   const undoRef = useRef<string | null>(null)
   const taRef = useRef<HTMLTextAreaElement>(null)
   const showToast = useToast((s) => s.show)
@@ -232,6 +233,7 @@ function ChemEditor() {
           spellCheck={false}
           autoCapitalize="off"
           autoComplete="off"
+          onFocus={() => setKeypadVisible(true)}
         />
       </div>
 
@@ -246,7 +248,9 @@ function ChemEditor() {
       )}
 
       {/* 专业化学键盘 */}
-      <ChemKeyboard onInsert={insert} onCondition={insertCondition} />
+      <div className={`keypad-pop ${keypadVisible ? 'keypad-visible' : ''}`}>
+        <ChemKeyboard onInsert={insert} onCondition={insertCondition} />
+      </div>
 
       {/* 化学式信息 */}
       {parsed.kind === 'formula' && (

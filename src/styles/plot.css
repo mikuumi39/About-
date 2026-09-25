@@ -1,0 +1,111 @@
+/* 函数绘图 */
+
+.plot-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.plot-fn-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.plot-fn-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.plot-dot {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  color: var(--accent-text);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  opacity: 0.85;
+}
+.plot-dot.active {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  opacity: 1;
+}
+
+.plot-fn-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.4375rem 0.625rem;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+  font-family: var(--font-num);
+  /* ≥16px：避免 iOS 聚焦缩放 */
+  font-size: 1rem;
+  outline: none;
+}
+.plot-fn-row input:focus-visible {
+  border-color: var(--accent);
+}
+
+.plot-err {
+  margin: 0;
+  font-size: 0.8438rem;
+}
+
+.plot-add {
+  align-self: flex-start;
+}
+
+.plot-canvas-wrap {
+  position: relative;
+  height: max(300px, 46vh);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  overflow: hidden;
+}
+
+.plot-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+}
+.plot-canvas:active {
+  cursor: grabbing;
+}
+
+.plot-readout {
+  position: absolute;
+  top: 0.375rem;
+  left: 0.375rem;
+  padding: 0.25rem 0.5rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-s);
+  font-family: var(--font-num);
+  font-size: 0.75rem;
+  color: var(--text-2);
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+.plot-readout .dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.plot-toolbar {
+  align-items: center;
+}

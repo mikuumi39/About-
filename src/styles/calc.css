@@ -382,12 +382,14 @@ html[data-theme='ios-dark'] .keypad-host {
   bottom: 0.5rem;
   z-index: 5;
   margin-top: auto;
-  will-change: opacity, transform, filter, backdrop-filter;
-  animation: glassReveal var(--dur-slow) var(--ease-out) both;
-  transform-origin: center top;
+  opacity: 1;
+  transform: none;
+  filter: none;
 }
 .keypad-visible {
-  animation: glassReveal var(--dur-slow) var(--ease-out) both;
+  opacity: 1;
+  transform: none;
+  filter: none;
 }
 @media (prefers-reduced-motion: reduce) {
   .keypad-pop,

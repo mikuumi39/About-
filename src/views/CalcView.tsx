@@ -42,7 +42,6 @@ export default function CalcView() {
 
   const [input, setInput] = useState('')
   const [committed, setCommitted] = useState<CalcOutcome | null>(null)
-  const [keypadVisible, setKeypadVisible] = useState(true)
   const inputRef = useRef<HTMLInputElement>(null)
   const justEvaluated = useRef(false)
   const undoStack = useRef<string[]>([])
@@ -378,7 +377,6 @@ export default function CalcView() {
           onFocus={(e) => {
             // 软键盘弹起时确保输入框可见（jsdom 等环境无此 API）
             e.target.scrollIntoView?.({ block: 'nearest' })
-            setKeypadVisible(true)
           }}
           placeholder="输入算式，如 1/2+1/3、√25、2x+3=7"
           enterKeyHint="done"
@@ -418,7 +416,7 @@ export default function CalcView() {
       </div>
 
       {/* 键盘 */}
-      <div className={`keypad-pop ${keypadVisible ? 'keypad-visible' : ''}`}>
+      <div className="keypad-pop keypad-visible">
         <Keypad pro={mode === 'pro'} onKey={handleKey} />
       </div>
 

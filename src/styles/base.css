@@ -1,0 +1,616 @@
+/* ============================================================
+   简算 · 基础样式与布局外壳
+   移动端优先；≥900px 切换为侧边栏布局。
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: contain;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  touch-action: manipulation; /* 双击不放大，保留捏合缩放 */
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.num {
+  font-family: var(--font-num);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- 无障碍：跳转链接 ---------- */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: var(--panel);
+  color: var(--accent);
+  padding: 0.5rem 0.875rem;
+  border-radius: var(--radius-s);
+  box-shadow: var(--shadow-2);
+}
+.skip-link:focus-visible {
+  left: 0.75rem;
+  top: 0.75rem;
+}
+
+/* ---------- 应用骨架 ---------- */
+.app {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.page {
+  width: 100%;
+  max-width: 64rem;
+  margin-inline: auto;
+}
+
+/* ---------- 顶栏 ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  min-height: var(--topbar-h);
+  padding: 0.5rem 0.875rem;
+  padding-top: calc(0.5rem + env(safe-area-inset-top));
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+.topbar-title {
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---------- 主内容 ---------- */
+main.main {
+  flex: 1;
+  padding: 0.875rem;
+  padding-bottom: calc(var(--tabbar-h) + 1.25rem + env(safe-area-inset-bottom));
+}
+
+/* ---------- 桌面：侧边栏 ---------- */
+.side-nav {
+  display: none;
+}
+
+.tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: stretch;
+  height: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  background: var(--panel);
+  border-top: 1px solid var(--border);
+  z-index: 30;
+}
+
+.tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  color: var(--text-2);
+  font-size: 0.6875rem;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.tab[aria-current='page'] {
+  color: var(--accent);
+}
+.tab .icon {
+  display: block;
+}
+
+@media (min-width: 900px) {
+  .app {
+    flex-direction: row;
+  }
+
+  main.main {
+    padding: 1.5rem 2rem;
+    padding-bottom: 3rem;
+  }
+
+  .tabbar {
+    display: none;
+  }
+
+  .topbar {
+    padding: 0.625rem 2rem;
+    padding-top: 0.625rem;
+  }
+
+  .side-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 13rem;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    padding: 0.875rem 0.625rem;
+    border-right: 1px solid var(--border);
+    background: var(--panel);
+    overflow-y: auto;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5625rem;
+    font-weight: 800;
+    font-size: 1.125rem;
+    letter-spacing: 0.02em;
+    padding: 0.25rem 0.625rem 1rem;
+    color: var(--text);
+  }
+  .brand svg {
+    flex-shrink: 0;
+  }
+  .brand small {
+    font-weight: 500;
+    font-size: 0.6875rem;
+    color: var(--text-3);
+    display: block;
+    line-height: 1.2;
+  }
+
+  .nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    width: 100%;
+    padding: 0.5625rem 0.625rem;
+    border-radius: var(--radius-m);
+    color: var(--text-2);
+    font-size: 0.9375rem;
+    text-align: left;
+    transition: background-color var(--dur-fast) var(--ease-out),
+      color var(--dur-fast) var(--ease-out);
+  }
+  .nav-btn:hover {
+    background: var(--panel-2);
+    color: var(--text);
+  }
+  .nav-btn[aria-current='page'] {
+    background: var(--accent-weak);
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .side-foot {
+    margin-top: auto;
+    padding: 0.75rem 0.625rem;
+    font-size: 0.6875rem;
+    color: var(--text-3);
+  }
+}
+
+/* ---------- Bottom Sheet（移动端“更多”） ---------- */
+.sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--backdrop);
+  z-index: 40;
+  animation: fade-in var(--dur-fast) var(--ease-out);
+}
+
+.sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 41;
+  background: var(--panel);
+  border-radius: var(--radius-l) var(--radius-l) 0 0;
+  box-shadow: var(--shadow-2);
+  padding: 0.5rem 0.875rem calc(0.875rem + env(safe-area-inset-bottom));
+  animation: slide-up var(--dur-med) var(--ease-out);
+}
+.sheet-handle {
+  width: 2.25rem;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--border);
+  margin: 0.25rem auto 0.625rem;
+}
+.sheet-title {
+  margin: 0 0 0.375rem;
+  padding: 0 0.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-3);
+  font-weight: 600;
+}
+.sheet-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.8125rem 0.625rem;
+  border-radius: var(--radius-m);
+  font-size: 1rem;
+  text-align: left;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+.sheet-item:hover {
+  background: var(--panel-2);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes slide-up {
+  from {
+    transform: translateY(30%);
+    opacity: 0.6;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ---------- 视图切换 ---------- */
+.view-enter {
+  animation: view-in var(--dur-med) var(--ease-out);
+}
+@keyframes view-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- 通用组件 ---------- */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  padding: 0.5rem 0.875rem;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+  font-size: 0.9063rem;
+  font-weight: 500;
+  user-select: none;
+  transition: background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+.btn:hover {
+  background: var(--panel-2);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+.btn-primary:hover {
+  background: var(--accent);
+  filter: brightness(1.06);
+}
+.btn-danger {
+  color: var(--danger);
+  border-color: var(--danger);
+  background: transparent;
+}
+.btn-danger:hover {
+  background: var(--danger-weak);
+}
+
+/* 分段控件（简单/专业 等） */
+.seg {
+  display: inline-flex;
+  padding: 2px;
+  gap: 2px;
+  background: var(--panel-2);
+  border-radius: var(--radius-s);
+}
+.seg button {
+  padding: 0.25rem 0.75rem;
+  border-radius: 7px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-2);
+  transition: background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+.seg button[aria-pressed='true'] {
+  background: var(--panel);
+  color: var(--accent);
+  box-shadow: var(--shadow-1);
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  color: var(--text-3);
+  padding: 3rem 1rem;
+}
+.empty-state h2 {
+  margin: 0.75rem 0 0.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-2);
+}
+.empty-state p {
+  margin: 0;
+  font-size: 0.875rem;
+}
+.empty-state svg {
+  opacity: 0.55;
+}
+
+/* 桌面滚动条微调 */
+@media (min-width: 900px) {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 999px;
+    border: 2px solid var(--bg);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--text-3);
+  }
+}
+
+/* ---------- 视图懒加载占位 ---------- */
+.view-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 0;
+}
+.spinner {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+html[data-motion='off'] .spinner {
+  animation-duration: 0.01ms !important;
+}
+
+/* ---------- 统一 Motion System ----------
+   只动 transform / opacity，GPU 友好；
+   fast=按压反馈，med=面板/Toast，slow=页面级切换。 */
+
+/* 页面/懒加载视图进入 */
+.view-enter {
+  animation: viewIn var(--dur-slow) var(--ease-out) both;
+}
+@keyframes viewIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 结果卡片出现：轻微上浮 + 弹性 */
+@keyframes resultPop {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Toast：底部滑入 */
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 12px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* 收藏星标弹跳 */
+@keyframes starPop {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.35);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* 面板展开（条件面板 / 专业函数组） */
+@keyframes panelOpen {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* ---------- 🧊 毛玻璃主题：应用外壳半透明 + 背景模糊 ---------- */
+html[data-theme='ios-dark'] .topbar,
+html[data-theme='ios-dark'] .side-nav,
+html[data-theme='ios-dark'] .tabbar,
+html[data-theme='ios-dark'] .sheet {
+  background: var(--glass-panel);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border-color: var(--glass-border);
+}
+
+/* 毛玻璃主题下通用面板也带上玻璃质感 */
+html[data-theme='ios-dark'] .panel {
+  background: var(--glass-panel);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border-color: var(--glass-border);
+}
+
+html[data-theme='ios-dark'] .seg,
+html[data-theme='ios-dark'] .seg button,
+html[data-theme='ios-dark'] .btn {
+  -webkit-backdrop-filter: blur(calc(var(--glass-blur) * 0.6)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(calc(var(--glass-blur) * 0.6)) saturate(var(--glass-saturate));
+}
+/* ---------- 🧊 全站统一“磨玻璃渐变显现”动画 ----------
+   所有面板/视图/键盘/Toast 共享同一套淡入节奏：
+   从轻微模糊、半透明、上浮渐变到清晰实体，保证动画一致性。 */
+@keyframes glassReveal {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+    filter: blur(10px) saturate(1.4);
+    -webkit-backdrop-filter: blur(10px) saturate(1.4);
+  }
+  60% {
+    opacity: 0.92;
+    transform: translateY(-1px) scale(1.002);
+    filter: blur(2px) saturate(1.1);
+    -webkit-backdrop-filter: blur(2px) saturate(1.1);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0) saturate(1);
+    -webkit-backdrop-filter: blur(0) saturate(1);
+  }
+}
+
+.view-enter,
+.panel,
+.calc-input-box,
+.calc-result,
+.calc-history,
+.keypad-pop,
+.toast,
+.sheet,
+.pro-grid {
+  animation: glassReveal var(--dur-slow) var(--ease-out) both;
+  transform-origin: center top;
+}
+
+/* 毛玻璃主题下，动画期间额外保持玻璃模糊，让渐变更“磨砂” */
+html[data-theme='ios-dark'] .view-enter,
+html[data-theme='ios-dark'] .panel,
+html[data-theme='ios-dark'] .calc-input-box,
+html[data-theme='ios-dark'] .calc-result,
+html[data-theme='ios-dark'] .calc-history,
+html[data-theme='ios-dark'] .keypad-pop,
+html[data-theme='ios-dark'] .toast,
+html[data-theme='ios-dark'] .sheet,
+html[data-theme='ios-dark'] .pro-grid {
+  will-change: opacity, transform, filter, backdrop-filter;
+}
+
+/* 系统减少动态效果时与 data-motion='off' 同等对待 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

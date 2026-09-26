@@ -1,0 +1,327 @@
+
+/* ---------------- 🧊 毛玻璃效果（仿 iOS 毛玻璃计算器） ---------------- */
+html[data-theme='ios-dark'] {
+  color-scheme: dark;
+  /* 背景：采用蓝紫渐变，让毛玻璃的模糊/通透感有内容可透 */
+  --bg: #141b2e;
+  --panel: rgb(255 255 255 / 0.1);
+  --panel-2: rgb(255 255 255 / 0.13);
+  --border: rgb(255 255 255 / 0.16);
+  --text: #ffffff;
+  --text-2: rgb(255 255 255 / 0.72);
+  --text-3: rgb(255 255 255 / 0.45);
+  --accent: #ff9f0a;
+  --accent-text: #ffffff;
+  --accent-weak: rgb(255 159 10 / 0.16);
+  --danger: #ff453a;
+  --danger-weak: rgb(255 69 58 / 0.16);
+  --ok: #30d158;
+  --warn: #ffd60a;
+  --warn-weak: rgb(255 214 10 / 0.14);
+  --key: rgb(255 255 255 / 0.14);
+  --key-hover: rgb(255 255 255 / 0.2);
+  --key-active: rgb(255 255 255 / 0.26);
+  --key-fn: rgb(255 255 255 / 0.1);
+  --backdrop: rgb(4 8 18 / 0.5);
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.25);
+  --shadow-2: 0 8px 32px rgb(0 0 0 / 0.35);
+
+  /* 毛玻璃专用令牌 */
+  --glass-blur: 20px;
+  --glass-saturate: 180%;
+  --glass-panel: rgb(255 255 255 / 0.12);
+  --glass-panel-2: rgb(255 255 255 / 0.08);
+  --glass-border: rgb(255 255 255 / 0.18);
+  --glass-highlight: rgb(255 255 255 / 0.25);
+}
+
+/* 毛玻璃背景：渐变光斑，让 backdrop-filter 真正“毛”起来 */
+html[data-theme='ios-dark'] body {
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgb(80 120 255 / 0.35), transparent 60%),
+    radial-gradient(900px 500px at 110% 10%, rgb(255 110 200 / 0.25), transparent 55%),
+    radial-gradient(800px 800px at 50% 120%, rgb(70 200 220 / 0.2), transparent 60%),
+    linear-gradient(145deg, #0f172a 0%, #1e293b 45%, #312e81 100%);
+  background-attachment: fixed;
+}
+
+/* ============================================================
+   简算 · 设计令牌
+   结构性令牌放 :root（不随主题变化）；
+   颜色类令牌按 [data-theme] 覆盖。
+   所有组件只允许引用语义令牌，禁止硬编码颜色。
+   ============================================================ */
+
+:root {
+  /* 字体：系统中文字体栈，避免加载 Web 字体拖慢首屏 */
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto,
+    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  --font-num: ui-monospace, 'SF Mono', 'Cascadia Mono', Consolas, Menlo,
+    'Courier New', monospace;
+
+  /* 圆角 */
+  --radius-s: 8px;
+  --radius-m: 12px;
+  --radius-l: 16px;
+
+  /* 动效时长（可被“关闭动画”整体禁用）；统一三档节奏 */
+  --dur-fast: 120ms;
+  --dur-med: 220ms;
+  --dur-slow: 360ms;
+  --ease-out: cubic-bezier(0.2, 0.7, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.5, 1);
+
+  /* 布局常量 */
+  --tabbar-h: 58px;
+  --topbar-h: 52px;
+
+  /* 无障碍：字号缩放系数（由设置写入，0.85 – 1.3） */
+  --font-scale: 1;
+
+  /* 数据可视化：函数曲线色板（浅色/深色主题通用） */
+  --fn1: #2563eb;
+  --fn2: #dc2626;
+  --fn3: #16a34a;
+  --fn4: #d97706;
+  --fn5: #9333ea;
+  --fn6: #0891b2;
+}
+
+html {
+  font-size: calc(16px * var(--font-scale));
+}
+
+/* ---------------- 🤍 极简白（默认） ---------------- */
+html[data-theme='minimal-light'] {
+  color-scheme: light;
+  --bg: #f5f6f8;
+  --panel: #ffffff;
+  --panel-2: #eef0f3;
+  --border: #dfe3e8;
+  --text: #1f2328;
+  --text-2: #59636e;
+  --text-3: #8c959f;
+  --accent: #2160d3;
+  --accent-text: #ffffff;
+  --accent-weak: #e8effc;
+  --danger: #d1242f;
+  --danger-weak: #ffebe9;
+  --ok: #1a7f37;
+  --warn: #9a6700;
+  --warn-weak: #fff8dd;
+  --key: #ffffff;
+  --key-hover: #f0f2f5;
+  --key-active: #e3e7ec;
+  --key-fn: #f6f7f9;
+  --backdrop: rgb(15 18 22 / 0.45);
+  --shadow-1: 0 1px 2px rgb(16 24 40 / 0.07);
+  --shadow-2: 0 8px 28px rgb(16 24 40 / 0.14);
+}
+
+/* ---------------- 🌌 深紫 ---------------- */
+html[data-theme='violet-dark'] {
+  color-scheme: dark;
+  --bg: #16131d;
+  --panel: #201b2b;
+  --panel-2: #292236;
+  --border: #362d47;
+  --text: #ece9f5;
+  --text-2: #a99fc2;
+  --text-3: #7a7196;
+  --accent: #9080f2;
+  --accent-text: #16131d;
+  --accent-weak: #2b2540;
+  --danger: #f2787e;
+  --danger-weak: #3a2530;
+  --ok: #5ecb92;
+  --warn: #e2a755;
+  --warn-weak: #38301f;
+  --key: #2a2340;
+  --key-hover: #342b4e;
+  --key-active: #3e355c;
+  --key-fn: #241e33;
+  --backdrop: rgb(6 4 12 / 0.6);
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.35);
+  --shadow-2: 0 8px 28px rgb(0 0 0 / 0.45);
+}
+
+/* ---------------- 🖤 OLED 黑 ---------------- */
+html[data-theme='oled-black'] {
+  color-scheme: dark;
+  --bg: #000000;
+  --panel: #0d0d10;
+  --panel-2: #17171c;
+  --border: #26262d;
+  --text: #f1f1f3;
+  --text-2: #a7a7ae;
+  --text-3: #6d6d75;
+  --accent: #4d8dff;
+  --accent-text: #000000;
+  --accent-weak: #101a2a;
+  --danger: #ff6b70;
+  --danger-weak: #2a1113;
+  --ok: #4cc38a;
+  --warn: #e2b340;
+  --warn-weak: #261e0c;
+  --key: #15151a;
+  --key-hover: #1e1e25;
+  --key-active: #28282f;
+  --key-fn: #101014;
+  --backdrop: rgb(0 0 0 / 0.65);
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.6);
+  --shadow-2: 0 8px 28px rgb(0 0 0 / 0.7);
+}
+
+/* ---------------- 🌸 二次元（樱粉） ---------------- */
+html[data-theme='sakura-pink'] {
+  color-scheme: light;
+  --bg: #fdf2f6;
+  --panel: #ffffff;
+  --panel-2: #fbe9f0;
+  --border: #f4d4e0;
+  --text: #43303a;
+  --text-2: #8a6575;
+  --text-3: #b491a0;
+  --accent: #ec6a9c;
+  --accent-text: #ffffff;
+  --accent-weak: #fce7ef;
+  --danger: #e0475e;
+  --danger-weak: #fde9ec;
+  --ok: #47a96e;
+  --warn: #d98a2b;
+  --warn-weak: #fdf1dd;
+  --key: #ffffff;
+  --key-hover: #fdeff5;
+  --key-active: #f9dfe9;
+  --key-fn: #fdf3f8;
+  --backdrop: rgb(67 48 58 / 0.45);
+  --shadow-1: 0 1px 2px rgb(120 60 90 / 0.08);
+  --shadow-2: 0 8px 28px rgb(120 60 90 / 0.16);
+}
+
+/* ---------------- 🌊 蓝色（海洋） ---------------- */
+html[data-theme='ocean-blue'] {
+  color-scheme: light;
+  --bg: #edf4fb;
+  --panel: #ffffff;
+  --panel-2: #e2edf8;
+  --border: #cfdfee;
+  --text: #17293c;
+  --text-2: #506e8b;
+  --text-3: #85a1bc;
+  --accent: #1976d2;
+  --accent-text: #ffffff;
+  --accent-weak: #e1effb;
+  --danger: #cf3a45;
+  --danger-weak: #fbe9ea;
+  --ok: #1f8f55;
+  --warn: #a56a00;
+  --warn-weak: #faf0da;
+  --key: #ffffff;
+  --key-hover: #eff5fc;
+  --key-active: #dfeaf6;
+  --key-fn: #f2f7fc;
+  --backdrop: rgb(13 30 46 / 0.45);
+  --shadow-1: 0 1px 2px rgb(20 45 70 / 0.08);
+  --shadow-2: 0 8px 28px rgb(20 45 70 / 0.15);
+}
+
+/* ---------------- 🌿 清新（草木绿） ---------------- */
+html[data-theme='fresh-green'] {
+  color-scheme: light;
+  --bg: #f0f7ee;
+  --panel: #ffffff;
+  --panel-2: #e5f1e2;
+  --border: #d2e5ce;
+  --text: #22331f;
+  --text-2: #5c7256;
+  --text-3: #8fa789;
+  --accent: #2e9e44;
+  --accent-text: #ffffff;
+  --accent-weak: #e3f4e4;
+  --danger: #cc4444;
+  --danger-weak: #faeaea;
+  --ok: #2e9e44;
+  --warn: #9a6700;
+  --warn-weak: #f7efd8;
+  --key: #ffffff;
+  --key-hover: #eff6ed;
+  --key-active: #e0eedd;
+  --key-fn: #f3f8f1;
+  --backdrop: rgb(25 42 22 / 0.45);
+  --shadow-1: 0 1px 2px rgb(30 60 28 / 0.08);
+  --shadow-2: 0 8px 28px rgb(30 60 28 / 0.15);
+}
+
+/* ---------------- 📚 学习工具（纸感暖黄） ---------------- */
+html[data-theme='study-paper'] {
+  color-scheme: light;
+  --bg: #f5efe3;
+  --panel: #fdfaf2;
+  --panel-2: #eee6d4;
+  --border: #ded2ba;
+  --text: #33302a;
+  --text-2: #6e6757;
+  --text-3: #a29a86;
+  --accent: #a8742a;
+  --accent-text: #ffffff;
+  --accent-weak: #f4ead4;
+  --danger: #bb4430;
+  --danger-weak: #f8e8e2;
+  --ok: #4a7c3f;
+  --warn: #96700a;
+  --warn-weak: #f5ecd4;
+  --key: #fffdf7;
+  --key-hover: #f6f0e2;
+  --key-active: #ece3cf;
+  --key-fn: #f8f3e7;
+  --backdrop: rgb(40 34 24 / 0.45);
+  --shadow-1: 0 1px 2px rgb(80 66 40 / 0.09);
+  --shadow-2: 0 8px 28px rgb(80 66 40 / 0.16);
+}
+
+/* ---------------- 💻 Terminal ---------------- */
+html[data-theme='terminal'] {
+  color-scheme: dark;
+  --bg: #0a0f0a;
+  --panel: #0f1610;
+  --panel-2: #16211a;
+  --border: #23392b;
+  --text: #c9e8cd;
+  --text-2: #7fae88;
+  --text-3: #567c60;
+  --accent: #3dd968;
+  --accent-text: #06210f;
+  --accent-weak: #12291a;
+  --danger: #ff6e64;
+  --danger-weak: #33150f;
+  --ok: #3dd968;
+  --warn: #e0c341;
+  --warn-weak: #2c260e;
+  --key: #131c15;
+  --key-hover: #1a271e;
+  --key-active: #223127;
+  --key-fn: #101812;
+  --backdrop: rgb(0 8 2 / 0.65);
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.55);
+  --shadow-2: 0 8px 28px rgb(0 20 6 / 0.65);
+}
+
+/* ---------------- 动效开关 ---------------- */
+html[data-motion='off'] *,
+html[data-motion='off'] *::before,
+html[data-motion='off'] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,623 @@
+/* ============================================================
+   计算器视图样式
+   ============================================================ */
+
+.calc-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+/* ---------- 输入区 ---------- */
+.calc-input-box {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  padding: 0.625rem 0.75rem;
+}
+
+.calc-input-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.calc-angle-chip {
+  display: inline-flex;
+  padding: 2px;
+  gap: 2px;
+  background: var(--panel-2);
+  border-radius: var(--radius-s);
+}
+.calc-angle-chip button {
+  padding: 0.125rem 0.625rem;
+  border-radius: 6px;
+  font-size: 0.7813rem;
+  font-weight: 600;
+  color: var(--text-2);
+}
+.calc-angle-chip button[aria-pressed='true'] {
+  background: var(--panel);
+  color: var(--accent);
+  box-shadow: var(--shadow-1);
+}
+
+.calc-hint {
+  font-size: 0.7188rem;
+  color: var(--text-3);
+}
+
+.calc-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-num);
+  font-size: 1.25rem;
+  line-height: 1.4;
+  padding: 0.125rem 0;
+  caret-color: var(--accent);
+}
+.calc-input::placeholder {
+  color: var(--text-3);
+}
+
+.calc-preview {
+  min-height: 1.5rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  color: var(--text-2);
+  font-size: 0.9375rem;
+  padding-top: 0.25rem;
+  border-top: 1px dashed var(--border);
+  margin-top: 0.375rem;
+  scrollbar-width: none;
+}
+.calc-preview::-webkit-scrollbar {
+  display: none;
+}
+.calc-preview:empty {
+  border-top-color: transparent;
+}
+
+/* 错误提示 */
+.calc-error {
+  margin-top: 0.375rem;
+  padding: 0.5rem 0.625rem;
+  background: var(--danger-weak);
+  border-radius: var(--radius-s);
+  color: var(--danger);
+  font-size: 0.8438rem;
+  line-height: 1.45;
+  word-break: break-all;
+}
+.calc-error-snippet {
+  font-family: var(--font-num);
+  white-space: pre;
+  display: block;
+  margin-top: 0.25rem;
+  overflow-x: auto;
+  font-size: 0.8125rem;
+}
+.calc-error-caret {
+  color: var(--danger);
+  font-weight: 700;
+}
+
+/* ---------- 结果卡片 ---------- */
+.calc-result {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  padding: 0.75rem 0.875rem;
+  animation: glassReveal var(--dur-slow) var(--ease-out) both;
+}
+
+.calc-result-main {
+  font-family: var(--font-num);
+  font-size: 1.625rem;
+  font-weight: 600;
+  word-break: break-all;
+  line-height: 1.35;
+  user-select: text;
+  -webkit-user-select: text;
+  cursor: text;
+}
+
+.calc-result-label {
+  font-size: 0.75rem;
+  color: var(--text-3);
+  margin-bottom: 0.125rem;
+}
+
+.calc-solve-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.calc-solve-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.calc-solve-row .label {
+  font-family: var(--font-num);
+  color: var(--text-2);
+  flex-shrink: 0;
+}
+.calc-solve-row .value {
+  font-family: var(--font-num);
+  font-size: 1.1875rem;
+  font-weight: 600;
+  word-break: break-all;
+}
+
+.calc-note {
+  margin-top: 0.5rem;
+  font-size: 0.8125rem;
+  color: var(--text-2);
+  background: var(--warn-weak);
+  color-adjust: exact;
+  border-radius: var(--radius-s);
+  padding: 0.5rem 0.625rem;
+  line-height: 1.5;
+}
+html[data-theme='minimal-light'] .calc-note {
+  color: var(--warn);
+}
+
+.calc-exact {
+  margin-top: 0.375rem;
+  font-size: 0.875rem;
+  color: var(--text-2);
+}
+.calc-exact .val {
+  font-family: var(--font-num);
+  color: var(--text);
+}
+
+.calc-actions {
+  display: flex;
+  gap: 0.375rem;
+  flex-wrap: wrap;
+  margin-top: 0.625rem;
+}
+.calc-actions .btn {
+  padding: 0.3125rem 0.625rem;
+  font-size: 0.8125rem;
+}
+
+/* ---------- 简单模式高频函数条 ---------- */
+.kbd-strip {
+  display: flex;
+  gap: 0.375rem;
+  overflow-x: auto;
+  padding-bottom: 0.125rem;
+  scrollbar-width: none;
+}
+.kbd-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.k-chip {
+  flex-shrink: 0;
+  min-width: 2.75rem;
+  padding: 0.3125rem 0.5625rem;
+  border-radius: var(--radius-s);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  font-family: var(--font-num);
+  font-size: 0.9063rem;
+  color: var(--text);
+  will-change: transform, background-color;
+  transition: background-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+.k-chip:active {
+  transform: scale(0.94);
+  background: var(--key-active);
+  border-color: var(--border);
+}
+
+/* ---------- 专业模式函数面板（分组，不平铺） ---------- */
+.pro-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+.pro-subjects {
+  align-self: flex-start;
+  gap: 3px;
+  padding: 3px;
+  border-radius: var(--radius-s);
+  background: var(--panel-2);
+}
+.pro-subjects button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0.3125rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-2);
+  transition: background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+.pro-subjects button[aria-selected='true'] {
+  background: var(--panel);
+  color: var(--accent);
+  box-shadow: var(--shadow-1);
+  transform: translateY(-1px);
+}
+.pro-subjects button:active {
+  transform: scale(0.96);
+}
+.pro-subjects .subj-icon {
+  font-size: 0.9375rem;
+  line-height: 1;
+}
+.pro-tabs {
+  align-self: flex-start;
+  margin-top: 0.125rem;
+}
+.pro-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.3125rem;
+  will-change: opacity, transform, filter, backdrop-filter;
+  animation: glassReveal var(--dur-slow) var(--ease-out) both;
+}
+.pro-grid .key-fn {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 0.25rem;
+  font-size: clamp(0.75rem, 2.5vw, 0.9375rem);
+  height: 2.375rem;
+}
+
+/* 紧凑功能键（面板内） */
+.key-sm {
+  height: 2.5rem;
+  font-size: 1rem;
+}
+
+/* ---------- 🧊 毛玻璃主题专用样式（原 iOS 主题） ---------- */
+html[data-theme='ios-dark'] .keypad {
+  gap: 0.5rem;
+}
+html[data-theme='ios-dark'] .key {
+  border-radius: 999px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.25);
+  border: 1px solid rgb(255 255 255 / 0.1);
+  background: var(--key);
+  -webkit-backdrop-filter: blur(6px) saturate(var(--glass-saturate));
+  backdrop-filter: blur(6px) saturate(var(--glass-saturate));
+}
+html[data-theme='ios-dark'] .key.num {
+  background: rgb(255 255 255 / 0.14);
+}
+html[data-theme='ios-dark'] .key-op {
+  background: rgb(255 159 10 / 0.78);
+  color: #ffffff;
+  font-size: clamp(1.5rem, 5vw, 1.8rem);
+}
+html[data-theme='ios-dark'] .key-eq {
+  background: rgb(48 209 88 / 0.85);
+  color: #ffffff;
+}
+html[data-theme='ios-dark'] .key-danger {
+  background: rgb(255 255 255 / 0.18);
+  color: #ff453a;
+}
+html[data-theme='ios-dark'] .key-move {
+  background: rgb(255 255 255 / 0.12);
+  color: var(--text-2);
+  border: 1px solid rgb(255 255 255 / 0.1);
+}
+html[data-theme='ios-dark'] .key:hover {
+  background: rgb(255 255 255 / 0.24);
+}
+html[data-theme='ios-dark'] .k-chip {
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.12);
+  border-color: rgb(255 255 255 / 0.14);
+  -webkit-backdrop-filter: blur(8px) saturate(var(--glass-saturate));
+  backdrop-filter: blur(8px) saturate(var(--glass-saturate));
+}
+html[data-theme='ios-dark'] .pro-grid .key {
+  border-radius: var(--radius-s);
+}
+html[data-theme='ios-dark'] .pro-subjects {
+  background: rgb(255 255 255 / 0.08);
+}
+html[data-theme='ios-dark'] .pro-subjects button[aria-selected='true'] {
+  background: rgb(255 255 255 / 0.16);
+  color: #fff;
+}
+html[data-theme='ios-dark'] .pro-tabs button[aria-selected='true'] {
+  background: rgb(255 255 255 / 0.16);
+  color: #fff;
+}
+html[data-theme='ios-dark'] .calc-input {
+  color: #ffffff;
+  font-size: 1.5rem;
+}
+
+/* 计算器主要面板：毛玻璃质感 */
+html[data-theme='ios-dark'] .calc-input-box,
+html[data-theme='ios-dark'] .calc-result,
+html[data-theme='ios-dark'] .calc-history,
+html[data-theme='ios-dark'] .pro-panel,
+html[data-theme='ios-dark'] .kbd-strip {
+  background: var(--glass-panel);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border-color: var(--glass-border);
+}
+
+/* 虚拟键盘容器：常驻页面底部，玻璃托盘效果 */
+html[data-theme='ios-dark'] .keypad-host {
+  background: var(--glass-panel-2);
+  border: 1px solid var(--glass-border);
+  border-radius: calc(var(--radius-l) + 0.25rem);
+  padding: 0.625rem 0.625rem 0.75rem;
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  box-shadow: var(--shadow-2);
+}
+
+/* ---------- 键盘显隐动画（统一使用磨玻璃渐变显现） ---------- */
+.keypad-pop {
+  position: sticky;
+  bottom: 0.5rem;
+  z-index: 5;
+  margin-top: auto;
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+.keypad-visible {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .keypad-pop,
+  .keypad-visible {
+    animation: none !important;
+  }
+}
+html[data-motion='off'] .keypad-pop,
+html[data-motion='off'] .keypad-visible {
+  animation: none !important;
+}
+
+/* ---------- 主键盘：经典计算器布局 ---------- */
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.4375rem;
+}
+
+.key {
+  height: clamp(3.25rem, 9.5vw, 4rem);
+  border-radius: var(--radius-m);
+  background: var(--key);
+  box-shadow: var(--shadow-1);
+  font-family: var(--font-num);
+  font-size: clamp(1.1875rem, 4.5vw, 1.45rem);
+  font-weight: 500;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  will-change: transform, background-color, box-shadow;
+  transition: transform var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+.key:hover {
+  background: var(--key-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-2);
+}
+.key:active {
+  transform: scale(0.95);
+  filter: brightness(0.96);
+  box-shadow: var(--shadow-1);
+}
+/* 光标移动键：视觉上比运算键略轻，但仍归入 op 配色 */
+.key-move {
+  background: var(--key-fn);
+  color: var(--text-2);
+  font-size: clamp(1.125rem, 4vw, 1.375rem);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: transform var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+.key-move:hover {
+  background: var(--key-hover);
+  color: var(--text);
+}
+
+@media (min-width: 900px) {
+  .keypad {
+    gap: 0.5rem;
+  }
+}
+
+/* 运算符列：与数字明确区分 */
+.key-op {
+  background: var(--key-fn);
+  color: var(--accent);
+  font-weight: 600;
+  font-size: clamp(1.25rem, 5vw, 1.55rem);
+}
+.key-fn {
+  background: var(--key-fn);
+}
+/* AC：危险色但不像报错弹窗 */
+.key-danger {
+  background: var(--danger-weak);
+  color: var(--danger);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+/* 等号：全键盘最重的视觉权重 */
+.key-eq {
+  background: var(--accent);
+  color: var(--accent-text);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 6vw, 1.8rem);
+}
+
+/* ---------- 历史 ---------- */
+.calc-history {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  overflow: hidden;
+}
+.calc-history-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  width: 100%;
+  font-size: 0.8438rem;
+  color: var(--text-2);
+  font-weight: 600;
+}
+.calc-history-head svg {
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.calc-history-head[aria-expanded='true'] > span:last-child svg {
+  transform: rotate(180deg);
+}
+.calc-history-head:hover {
+  background: var(--panel-2);
+}
+.calc-history-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border-top: 1px solid var(--border);
+  text-align: left;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+.calc-history-item:hover {
+  background: var(--panel-2);
+}
+.calc-history-item .expr {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-num);
+  font-size: 0.9063rem;
+  color: var(--text-2);
+}
+.calc-history-item .res {
+  font-family: var(--font-num);
+  font-size: 0.9688rem;
+  font-weight: 600;
+  max-width: 45%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.calc-history-item .del {
+  flex-shrink: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--text-3);
+}
+.calc-history-item .del:hover {
+  background: var(--danger-weak);
+  color: var(--danger);
+}
+.calc-history-item.star {
+  color: var(--border);
+}
+.calc-history-item.star.active {
+  color: #f5b301;
+}
+.calc-history-item.fav .expr {
+  color: var(--text);
+}
+.calc-clear-btn {
+  width: auto;
+  align-self: flex-start;
+  font-size: 0.8125rem;
+  color: var(--text-3);
+}
+
+/* 历史筛选小号分段控件 */
+.seg-s {
+  margin: 0.25rem 0.5rem;
+  display: inline-flex;
+}
+.seg-s button {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.7813rem;
+}
+
+/* ---------- Toast ---------- */
+.toast-host {
+  position: fixed;
+  bottom: calc(var(--tabbar-h) + 1.25rem + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.375rem;
+  pointer-events: none;
+}
+@media (min-width: 900px) {
+  .toast-host {
+    bottom: 2rem;
+  }
+}
+.toast {
+  background: var(--text);
+  color: var(--bg);
+  font-size: 0.8438rem;
+  padding: 0.4375rem 0.875rem;
+  border-radius: 999px;
+  box-shadow: var(--shadow-2);
+  animation: glassReveal var(--dur-slow) var(--ease-out) both;
+}
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

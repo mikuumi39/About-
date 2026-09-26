@@ -1,0 +1,177 @@
+/* 公式编辑器样式 */
+
+.fx-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.fx-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.fx-row {
+  display: flex;
+  gap: 0.375rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.fx-row::-webkit-scrollbar {
+  display: none;
+}
+
+.fx-chip {
+  flex-shrink: 0;
+  padding: 0.3125rem 0.625rem;
+  border-radius: var(--radius-s);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  font-size: 0.875rem;
+  color: var(--text);
+  transition: background-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+.fx-chip:hover {
+  background: var(--panel-2);
+}
+.fx-chip:active {
+  transform: scale(0.94);
+}
+.fx-chip .katex {
+  font-size: 0.9em;
+}
+.fx-chip-label {
+  font-size: 0.7188rem;
+  color: var(--text-3);
+  margin-inline-start: 0.25rem;
+}
+
+.fx-editor-box {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  padding: 0.5rem 0.75rem 0.625rem;
+}
+
+.fx-textarea {
+  width: 100%;
+  min-height: 4.5rem;
+  resize: vertical;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-num);
+  /* ≥16px：避免 iOS 聚焦缩放 */
+  font-size: 1rem;
+  line-height: 1.55;
+  padding: 0.25rem 0;
+  caret-color: var(--accent);
+}
+.fx-textarea::placeholder {
+  color: var(--text-3);
+}
+
+.fx-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+  padding-top: 0.375rem;
+  border-top: 1px dashed var(--border);
+}
+
+.fx-hint {
+  font-size: 0.7188rem;
+  color: var(--text-3);
+  line-height: 1.6;
+}
+
+.fx-actions {
+  display: flex;
+  gap: 0.375rem;
+  flex-wrap: wrap;
+}
+.fx-actions .btn {
+  padding: 0.3125rem 0.625rem;
+  font-size: 0.8125rem;
+}
+
+.fx-preview-box {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  padding: 0.875rem;
+  min-height: 4.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: auto;
+}
+.fx-preview-box .katex-display {
+  margin: 0;
+}
+.fx-preview-box .katex {
+  font-size: 1.1875rem;
+}
+
+.fx-error {
+  background: var(--danger-weak);
+  color: var(--danger);
+  border-radius: var(--radius-s);
+  padding: 0.5625rem 0.75rem;
+  font-size: 0.8438rem;
+}
+
+/* 公式库 */
+.fx-lib-cats {
+  display: flex;
+  gap: 0.375rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.fx-lib-cats::-webkit-scrollbar {
+  display: none;
+}
+
+.fx-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 0.5rem;
+}
+
+.fx-card {
+  text-align: left;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  padding: 0.625rem 0.75rem;
+  transition: border-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+.fx-card:hover {
+  border-color: var(--accent);
+}
+.fx-card:active {
+  transform: scale(0.98);
+}
+.fx-card .name {
+  font-size: 0.7813rem;
+  color: var(--text-2);
+  margin-bottom: 0.375rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.fx-card .body {
+  overflow-x: auto;
+  font-size: 0.9063rem;
+}
+.fx-card .note {
+  margin-top: 0.3125rem;
+  font-size: 0.7188rem;
+  color: var(--text-3);
+}

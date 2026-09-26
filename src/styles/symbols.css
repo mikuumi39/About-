@@ -1,0 +1,430 @@
+/* 符号面板样式 */
+
+.sym-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(3rem, 1fr));
+  gap: 0.375rem;
+}
+
+.sym-cell {
+  position: relative;
+}
+
+.sym-btn {
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-s);
+  font-size: 1.25rem;
+  color: var(--text);
+  transition: background-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+.sym-btn:hover {
+  background: var(--panel-2);
+}
+.sym-btn:active {
+  transform: scale(0.92);
+}
+
+/* 触摸目标下限（无障碍）：小屏上符号格不小于约 44px */
+@media (max-width: 480px) {
+  .sym-grid {
+    grid-template-columns: repeat(auto-fill, minmax(3.25rem, 1fr));
+  }
+}
+
+.sym-fav {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 1rem;
+  height: 1rem;
+  font-size: 0.625rem;
+  line-height: 1;
+  color: var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+.sym-fav:hover {
+  transform: scale(1.25);
+}
+.sym-fav.active {
+  color: #f5b301;
+}
+
+.sym-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--text-3);
+  padding: 2rem 0;
+  font-size: 0.875rem;
+}
+
+.sym-cats {
+  display: flex;
+  gap: 0.375rem;
+  overflow-x: auto;
+  padding-bottom: 0.125rem;
+  scrollbar-width: none;
+}
+.sym-cats::-webkit-scrollbar {
+  display: none;
+}
+.sym-cat-chip {
+  flex-shrink: 0;
+  padding: 0.3125rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  font-size: 0.8438rem;
+  color: var(--text-2);
+  transition: all var(--dur-fast) var(--ease-out);
+}
+.sym-cat-chip[aria-pressed='true'] {
+  background: var(--accent-weak);
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.sym-search {
+  width: 100%;
+  padding: 0.5625rem 0.75rem;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+  outline: none;
+  /* ≥16px：避免 iOS 聚焦时强制放大页面 */
+  font-size: 1rem;
+}
+.sym-search:focus-visible {
+  border-color: var(--accent);
+}
+
+.sym-section-title {
+  font-size: 0.8438rem;
+  font-weight: 600;
+  color: var(--text-2);
+  margin: 0.75rem 0.125rem 0.5rem;
+}
+
+/* ---------- 化学视图 ---------- */
+
+.chem-panel {
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.chem-mr {
+  font-size: 0.9375rem;
+}
+
+.chem-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+.chem-table th,
+.chem-table td {
+  text-align: left;
+  padding: 0.3125rem 0.25rem;
+  border-bottom: 1px solid var(--border);
+}
+.chem-table th {
+  color: var(--text-3);
+  font-weight: 600;
+  font-size: 0.7813rem;
+}
+.chem-table tr:last-child td {
+  border-bottom: none;
+}
+
+.chem-bar-wrap {
+  position: relative;
+  display: block;
+  height: 1.125rem;
+  min-width: 6rem;
+  background: var(--panel-2);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.chem-bar {
+  position: absolute;
+  inset: 0 auto 0 0;
+  display: block;
+  background: var(--accent);
+  opacity: 0.35;
+  border-radius: 999px;
+}
+.chem-bar-label {
+  position: relative;
+  z-index: 1;
+  padding-left: 0.5rem;
+  line-height: 1.125rem;
+  font-size: 0.75rem;
+  color: var(--text-2);
+  font-family: var(--font-num);
+}
+
+.chem-suggest {
+  border-color: var(--accent);
+}
+
+.chem-ok {
+  color: var(--ok);
+  font-size: 0.875rem;
+}
+
+/* ---------- 化学计算器 ---------- */
+
+.cc-tool h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-2);
+  font-weight: 600;
+}
+
+.cc-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.5rem;
+}
+
+.cc-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.cc-label {
+  font-size: 0.7813rem;
+  color: var(--text-3);
+}
+.cc-field input {
+  width: 100%;
+  padding: 0.5rem 0.625rem;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  color: var(--text);
+  font-family: var(--font-num);
+  font-size: 1rem;
+  outline: none;
+}
+.cc-field input:focus-visible {
+  border-color: var(--accent);
+}
+
+.cc-result {
+  margin-top: 0.625rem;
+  padding: 0.5625rem 0.75rem;
+  background: var(--accent-weak);
+  border-radius: var(--radius-s);
+  font-size: 0.9375rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.cc-sub {
+  color: var(--text-3);
+  font-size: 0.8125rem;
+  margin-inline-start: 0.25rem;
+}
+
+.cc-gas {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.8125rem;
+  color: var(--text-2);
+}
+
+/* ---------- 第三方主题列表 ---------- */
+
+.ct-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4375rem 0.125rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.875rem;
+}
+.ct-row:first-child {
+  border-top: none;
+}
+.ct-name {
+  font-weight: 600;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ct-meta {
+  color: var(--text-3);
+  font-size: 0.7813rem;
+  flex-shrink: 0;
+}
+.ct-badge {
+  color: var(--accent);
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+.ct-btn {
+  padding: 0.25rem 0.5625rem;
+  font-size: 0.7813rem;
+  margin-left: auto;
+}
+.ct-btn + .ct-btn {
+  margin-left: 0;
+}
+
+/* ---------- 学习工具 ---------- */
+
+.learn-card {
+  padding: 0.75rem;
+}
+
+.learn-title {
+  margin: 0 0 0.375rem;
+  font-size: 0.9063rem;
+  color: var(--text-2);
+  font-weight: 600;
+}
+
+.learn-label {
+  width: 45%;
+  color: var(--text-2);
+}
+
+.learn-value {
+  font-family: var(--font-num);
+  font-size: 0.9375rem;
+}
+
+/* ---------- 专业化学键盘 ---------- */
+.chem-kbd {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  padding: 0.625rem;
+}
+
+.ck-section {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+.ck-label {
+  flex-shrink: 0;
+  width: 3.25rem;
+  padding-top: 0.4375rem;
+  font-size: 0.7188rem;
+  color: var(--text-3);
+}
+
+.ck-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3125rem;
+  flex: 1;
+  min-width: 0;
+}
+.ck-elems {
+  max-height: 5.6rem;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+.ck-all {
+  margin-top: 0.3125rem;
+  max-height: 11rem;
+}
+
+.ck-key {
+  min-width: 2.25rem;
+  height: 2.125rem;
+  padding: 0 0.4375rem;
+  border-radius: var(--radius-s);
+  background: var(--key);
+  border: 1px solid var(--border);
+  font-family: var(--font-num);
+  font-size: 0.9063rem;
+  color: var(--text);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+.ck-key:active {
+  transform: scale(0.93);
+  background: var(--key-active);
+}
+.ck-el {
+  font-weight: 600;
+}
+.ck-el-sm {
+  min-width: 2rem;
+  height: 1.875rem;
+  font-size: 0.7813rem;
+  font-weight: 500;
+  opacity: 0.92;
+}
+.ck-charge {
+  background: var(--key-fn);
+  color: var(--accent);
+  font-weight: 600;
+}
+.ck-wide {
+  min-width: 2.75rem;
+}
+.ck-toggle.on {
+  background: var(--accent-weak);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.ck-cond {
+  margin-top: 0.3125rem;
+  animation: glassReveal var(--dur-slow) var(--ease-out) both;
+}
+.ck-cond-btn {
+  background: var(--panel-2);
+}
+.ck-ion {
+  font-family: inherit;
+}
+
+/* 大预览（所见即所得核心区） */
+.fx-hero {
+  min-height: 4.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.875rem 0.75rem;
+  border-radius: var(--radius-m);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  overflow-x: auto;
+}
+.fx-hero .katex {
+  font-size: 1.55em;
+}
+.fx-hero-empty {
+  color: var(--text-3);
+  font-size: 0.875rem;
+}
+.fx-hero-hint {
+  pointer-events: none;
+}

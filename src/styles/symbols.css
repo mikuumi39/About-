@@ -396,7 +396,7 @@
 }
 .ck-cond {
   margin-top: 0.3125rem;
-  animation: panelOpen var(--dur-med) var(--ease-out) both;
+  animation: glassReveal var(--dur-slow) var(--ease-out) both;
 }
 .ck-cond-btn {
   background: var(--panel-2);

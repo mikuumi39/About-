@@ -62,17 +62,7 @@ export default function CalcView() {
     })
   }, [])
 
-  // 点击输入框和键盘以外的区域时隐藏键盘
-  useEffect(() => {
-    const onDocClick = (e: MouseEvent) => {
-      const t = e.target as HTMLElement
-      if (t.closest('.calc-input-box') || t.closest('.keypad-host')) return
-      setKeypadVisible(false)
-    }
-    document.addEventListener('click', onDocClick)
-    return () => document.removeEventListener('click', onDocClick)
-  }, [])
-
+  // 虚拟键盘固定在计算界面下方常驻显示，不随点击空白处收起
   // 接收公式编辑器「发送到计算器」的内容（仅挂载时消费一次）
   useEffect(() => {
     const pending = useCalcBridge.getState().consume()

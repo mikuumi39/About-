@@ -1,29 +1,48 @@
 
-/* ---------------- 📱 iOS 深色（仿 iPhone 计算器） ---------------- */
+/* ---------------- 🧊 毛玻璃效果（仿 iOS 毛玻璃计算器） ---------------- */
 html[data-theme='ios-dark'] {
   color-scheme: dark;
-  --bg: #1c1c1e;
-  --panel: #2c2c2e;
-  --panel-2: #3a3a3c;
-  --border: #3a3a3c;
+  /* 背景：采用蓝紫渐变，让毛玻璃的模糊/通透感有内容可透 */
+  --bg: #141b2e;
+  --panel: rgb(255 255 255 / 0.1);
+  --panel-2: rgb(255 255 255 / 0.13);
+  --border: rgb(255 255 255 / 0.16);
   --text: #ffffff;
-  --text-2: #8e8e93;
-  --text-3: #636366;
+  --text-2: rgb(255 255 255 / 0.72);
+  --text-3: rgb(255 255 255 / 0.45);
   --accent: #ff9f0a;
   --accent-text: #ffffff;
-  --accent-weak: #3a3a3c;
+  --accent-weak: rgb(255 159 10 / 0.16);
   --danger: #ff453a;
-  --danger-weak: #3d2022;
+  --danger-weak: rgb(255 69 58 / 0.16);
   --ok: #30d158;
   --warn: #ffd60a;
-  --warn-weak: #3a3320;
-  --key: #333336;
-  --key-hover: #48484a;
-  --key-active: #565658;
-  --key-fn: #ff9f0a;
-  --backdrop: rgb(0 0 0 / 0.6);
-  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.3);
-  --shadow-2: 0 8px 28px rgb(0 0 0 / 0.5);
+  --warn-weak: rgb(255 214 10 / 0.14);
+  --key: rgb(255 255 255 / 0.14);
+  --key-hover: rgb(255 255 255 / 0.2);
+  --key-active: rgb(255 255 255 / 0.26);
+  --key-fn: rgb(255 255 255 / 0.1);
+  --backdrop: rgb(4 8 18 / 0.5);
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.25);
+  --shadow-2: 0 8px 32px rgb(0 0 0 / 0.35);
+
+  /* 毛玻璃专用令牌 */
+  --glass-blur: 20px;
+  --glass-saturate: 180%;
+  --glass-panel: rgb(255 255 255 / 0.12);
+  --glass-panel-2: rgb(255 255 255 / 0.08);
+  --glass-border: rgb(255 255 255 / 0.18);
+  --glass-highlight: rgb(255 255 255 / 0.25);
+}
+
+/* 毛玻璃背景：渐变光斑，让 backdrop-filter 真正“毛”起来 */
+html[data-theme='ios-dark'] body {
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgb(80 120 255 / 0.35), transparent 60%),
+    radial-gradient(900px 500px at 110% 10%, rgb(255 110 200 / 0.25), transparent 55%),
+    radial-gradient(800px 800px at 50% 120%, rgb(70 200 220 / 0.2), transparent 60%),
+    linear-gradient(145deg, #0f172a 0%, #1e293b 45%, #312e81 100%);
+  background-attachment: fixed;
 }
 
 /* ============================================================

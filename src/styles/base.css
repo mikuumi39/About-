@@ -529,6 +529,80 @@ html[data-motion='off'] .spinner {
     transform: translateY(0);
   }
 }
+/* ---------- 🧊 毛玻璃主题：应用外壳半透明 + 背景模糊 ---------- */
+html[data-theme='ios-dark'] .topbar,
+html[data-theme='ios-dark'] .side-nav,
+html[data-theme='ios-dark'] .tabbar,
+html[data-theme='ios-dark'] .sheet {
+  background: var(--glass-panel);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border-color: var(--glass-border);
+}
+
+/* 毛玻璃主题下通用面板也带上玻璃质感 */
+html[data-theme='ios-dark'] .panel {
+  background: var(--glass-panel);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border-color: var(--glass-border);
+}
+
+html[data-theme='ios-dark'] .seg,
+html[data-theme='ios-dark'] .seg button,
+html[data-theme='ios-dark'] .btn {
+  -webkit-backdrop-filter: blur(calc(var(--glass-blur) * 0.6)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(calc(var(--glass-blur) * 0.6)) saturate(var(--glass-saturate));
+}
+/* ---------- 🧊 全站统一“磨玻璃渐变显现”动画 ----------
+   所有面板/视图/键盘/Toast 共享同一套淡入节奏：
+   从轻微模糊、半透明、上浮渐变到清晰实体，保证动画一致性。 */
+@keyframes glassReveal {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+    filter: blur(10px) saturate(1.4);
+    -webkit-backdrop-filter: blur(10px) saturate(1.4);
+  }
+  60% {
+    opacity: 0.92;
+    transform: translateY(-1px) scale(1.002);
+    filter: blur(2px) saturate(1.1);
+    -webkit-backdrop-filter: blur(2px) saturate(1.1);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0) saturate(1);
+    -webkit-backdrop-filter: blur(0) saturate(1);
+  }
+}
+
+.view-enter,
+.panel,
+.calc-input-box,
+.calc-result,
+.calc-history,
+.keypad-pop,
+.toast,
+.sheet,
+.pro-grid {
+  animation: glassReveal var(--dur-slow) var(--ease-out) both;
+  transform-origin: center top;
+}
+
+/* 毛玻璃主题下，动画期间额外保持玻璃模糊，让渐变更“磨砂” */
+html[data-theme='ios-dark'] .view-enter,
+html[data-theme='ios-dark'] .panel,
+html[data-theme='ios-dark'] .calc-input-box,
+html[data-theme='ios-dark'] .calc-result,
+html[data-theme='ios-dark'] .calc-history,
+html[data-theme='ios-dark'] .keypad-pop,
+html[data-theme='ios-dark'] .toast,
+html[data-theme='ios-dark'] .sheet,
+html[data-theme='ios-dark'] .pro-grid {
+  will-change: opacity, transform, filter, backdrop-filter;
+}
 
 /* 系统减少动态效果时与 data-motion='off' 同等对待 */
 @media (prefers-reduced-motion: reduce) {

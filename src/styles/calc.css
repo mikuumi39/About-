@@ -113,7 +113,7 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-m);
   padding: 0.75rem 0.875rem;
-  animation: resultPop var(--dur-med) var(--ease-spring) both;
+  animation: glassReveal var(--dur-slow) var(--ease-out) both;
 }
 
 .calc-result-main {
@@ -271,8 +271,8 @@ html[data-theme='minimal-light'] .calc-note {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0.3125rem;
-  will-change: opacity, transform;
-  animation: panelOpen var(--dur-med) var(--ease-out) both;
+  will-change: opacity, transform, filter, backdrop-filter;
+  animation: glassReveal var(--dur-slow) var(--ease-out) both;
 }
 .pro-grid .key-fn {
   min-width: 0;
@@ -290,7 +290,7 @@ html[data-theme='minimal-light'] .calc-note {
   font-size: 1rem;
 }
 
-/* ---------- iOS 主题专用样式 ---------- */
+/* ---------- 🧊 毛玻璃主题专用样式（原 iOS 主题） ---------- */
 html[data-theme='ios-dark'] .keypad {
   gap: 0.5rem;
 }
@@ -298,49 +298,54 @@ html[data-theme='ios-dark'] .key {
   border-radius: 999px;
   font-weight: 600;
   box-shadow: 0 2px 8px rgb(0 0 0 / 0.25);
-  border: 1px solid rgb(255 255 255 / 0.08);
+  border: 1px solid rgb(255 255 255 / 0.1);
+  background: var(--key);
+  -webkit-backdrop-filter: blur(6px) saturate(var(--glass-saturate));
+  backdrop-filter: blur(6px) saturate(var(--glass-saturate));
 }
 html[data-theme='ios-dark'] .key.num {
-  background: #333336;
+  background: rgb(255 255 255 / 0.14);
 }
 html[data-theme='ios-dark'] .key-op {
-  background: var(--key-fn);
+  background: rgb(255 159 10 / 0.78);
   color: #ffffff;
   font-size: clamp(1.5rem, 5vw, 1.8rem);
 }
 html[data-theme='ios-dark'] .key-eq {
-  background: var(--ok);
+  background: rgb(48 209 88 / 0.85);
   color: #ffffff;
 }
 html[data-theme='ios-dark'] .key-danger {
-  background: #48484a;
+  background: rgb(255 255 255 / 0.18);
   color: #ff453a;
 }
 html[data-theme='ios-dark'] .key-move {
-  background: #3a3a3c;
+  background: rgb(255 255 255 / 0.12);
   color: var(--text-2);
-  border: 1px solid rgb(255 255 255 / 0.06);
+  border: 1px solid rgb(255 255 255 / 0.1);
 }
 html[data-theme='ios-dark'] .key:hover {
-  background: #48484a;
+  background: rgb(255 255 255 / 0.24);
 }
 html[data-theme='ios-dark'] .k-chip {
   border-radius: 999px;
-  background: #2c2c2e;
-  border-color: #3a3a3c;
+  background: rgb(255 255 255 / 0.12);
+  border-color: rgb(255 255 255 / 0.14);
+  -webkit-backdrop-filter: blur(8px) saturate(var(--glass-saturate));
+  backdrop-filter: blur(8px) saturate(var(--glass-saturate));
 }
 html[data-theme='ios-dark'] .pro-grid .key {
   border-radius: var(--radius-s);
 }
 html[data-theme='ios-dark'] .pro-subjects {
-  background: #1c1c1e;
+  background: rgb(255 255 255 / 0.08);
 }
 html[data-theme='ios-dark'] .pro-subjects button[aria-selected='true'] {
-  background: #3a3a3c;
+  background: rgb(255 255 255 / 0.16);
   color: #fff;
 }
 html[data-theme='ios-dark'] .pro-tabs button[aria-selected='true'] {
-  background: #3a3a3c;
+  background: rgb(255 255 255 / 0.16);
   color: #fff;
 }
 html[data-theme='ios-dark'] .calc-input {
@@ -348,30 +353,41 @@ html[data-theme='ios-dark'] .calc-input {
   font-size: 1.5rem;
 }
 
-/* ---------- 键盘弹出动画 ---------- */
+/* 计算器主要面板：毛玻璃质感 */
+html[data-theme='ios-dark'] .calc-input-box,
+html[data-theme='ios-dark'] .calc-result,
+html[data-theme='ios-dark'] .calc-history,
+html[data-theme='ios-dark'] .pro-panel,
+html[data-theme='ios-dark'] .kbd-strip {
+  background: var(--glass-panel);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border-color: var(--glass-border);
+}
+
+/* 虚拟键盘容器：常驻页面底部，玻璃托盘效果 */
+html[data-theme='ios-dark'] .keypad-host {
+  background: var(--glass-panel-2);
+  border: 1px solid var(--glass-border);
+  border-radius: calc(var(--radius-l) + 0.25rem);
+  padding: 0.625rem 0.625rem 0.75rem;
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  box-shadow: var(--shadow-2);
+}
+
+/* ---------- 键盘显隐动画（统一使用磨玻璃渐变显现） ---------- */
 .keypad-pop {
-  will-change: opacity, transform;
-  animation: keypadSlideIn var(--dur-med) var(--ease-out) both;
-  transform-origin: top center;
+  position: sticky;
+  bottom: 0.5rem;
+  z-index: 5;
+  margin-top: auto;
+  will-change: opacity, transform, filter, backdrop-filter;
+  animation: glassReveal var(--dur-slow) var(--ease-out) both;
+  transform-origin: center top;
 }
 .keypad-visible {
-  animation: keypadSlideIn var(--dur-med) var(--ease-spring) both;
-}
-@keyframes keypadSlideIn {
-  0% {
-    opacity: 0;
-    transform: translateY(18px) scale(0.97);
-    filter: blur(4px);
-  }
-  60% {
-    opacity: 1;
-    transform: translateY(-2px) scale(1.005);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0);
-  }
+  animation: glassReveal var(--dur-slow) var(--ease-out) both;
 }
 @media (prefers-reduced-motion: reduce) {
   .keypad-pop,
@@ -591,7 +607,7 @@ html[data-motion='off'] .keypad-visible {
   padding: 0.4375rem 0.875rem;
   border-radius: 999px;
   box-shadow: var(--shadow-2);
-  animation: toast-in var(--dur-med) var(--ease-out);
+  animation: glassReveal var(--dur-slow) var(--ease-out) both;
 }
 @keyframes toast-in {
   from {

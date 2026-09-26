@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { compute, CalcError } from '../engine/math'
+import { compute, CalcError, parseExpression } from '../engine/math'
 import type { CalcOutcome } from '../engine/math'
 import { useSettings } from '../store/settings'
 import { useHistory } from '../store/history'
@@ -10,6 +10,7 @@ import { smartKey, wrapFunction, unclosedParens, autoCompleteParens } from '../c
 import ResultCard from '../components/calc/ResultCard'
 import HistorySection from '../components/calc/HistorySection'
 import Katex from '../components/Katex'
+import { inputToLatex } from '../engine/math/latex'
 
 interface LiveState {
   outcome?: CalcOutcome
@@ -48,6 +49,16 @@ export default function CalcView() {
   const redoStack = useRef<string[]>([])
 
   const live = useMemo(() => tryCompute(input, angle, places), [input, angle, places])
+
+  // 实时把输入转成“日常书写”格式（LaTeX 数学排版），用于输入框下方预览
+  const previewLatex = useMemo(() => {
+    if (input.trim() === '') return null
+    try {
+      return inputToLatex(input, parseExpression)
+    } catch {
+      return null
+    }
+  }, [input])
 
   // ---------- 输入编辑 ----------
   const applyInput = useCallback((next: string, caret?: number) => {
@@ -395,6 +406,10 @@ export default function CalcView() {
                 {buildSnippet(input, live.error.pos)}
               </span>
             )}
+          </div>
+        ) : previewLatex !== null ? (
+          <div className="calc-preview" aria-live="polite">
+            <Katex latex={previewLatex} />
           </div>
         ) : live.outcome !== undefined ? (
           <div className="calc-preview" aria-live="polite">

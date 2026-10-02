@@ -31,3 +31,7 @@ next-env.d.ts
 
 # Misc
 coverage/
+
+# Python (ai_modify.py 运行产物)
+__pycache__/
+*.pyc

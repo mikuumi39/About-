@@ -49,6 +49,36 @@
   color: var(--text-3);
 }
 
+/* 复制算式（日常书写格式，发给 AI / 同学） */
+.expr-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-shrink: 0;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: background-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+}
+.expr-copy:hover {
+  background: var(--accent-weak);
+}
+.expr-copy:active {
+  transform: translateY(1px);
+}
+.expr-copy:disabled {
+  opacity: 0.45;
+}
+.expr-copy svg {
+  width: 13px;
+  height: 13px;
+}
+
 .calc-input {
   width: 100%;
   border: none;
@@ -297,7 +327,9 @@ html[data-theme='ios-dark'] .keypad {
 html[data-theme='ios-dark'] .key {
   border-radius: 999px;
   font-weight: 600;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 0.25);
+  box-shadow:
+    0 2px 8px rgb(0 0 0 / 0.25),
+    0 3px 0 rgb(0 0 0 / 0.32);
   border: 1px solid rgb(255 255 255 / 0.1);
   background: var(--key);
   -webkit-backdrop-filter: blur(6px) saturate(var(--glass-saturate));
@@ -326,6 +358,12 @@ html[data-theme='ios-dark'] .key-move {
 }
 html[data-theme='ios-dark'] .key:hover {
   background: rgb(255 255 255 / 0.24);
+}
+html[data-theme='ios-dark'] .key:active {
+  transform: translateY(3px) scale(0.99);
+  box-shadow:
+    0 1px 0 rgb(0 0 0 / 0.32),
+    inset 0 2px 5px rgb(0 0 0 / 0.35);
 }
 html[data-theme='ios-dark'] .k-chip {
   border-radius: 999px;
@@ -410,10 +448,15 @@ html[data-motion='off'] .keypad-visible {
 }
 
 .key {
-  height: clamp(3.25rem, 9.5vw, 4rem);
+  height: clamp(3.5rem, 10.5vw, 4.25rem);
   border-radius: var(--radius-m);
   background: var(--key);
-  box-shadow: var(--shadow-1);
+  border: 1px solid var(--line-12);
+  /* 实体键帽：顶面高光 + 底部 3px 键程厚度 */
+  box-shadow:
+    var(--shadow-1),
+    inset 0 1px 0 rgb(255 255 255 / 0.25),
+    0 3px 0 rgb(0 0 0 / 0.17);
   font-family: var(--font-num);
   font-size: clamp(1.1875rem, 4.5vw, 1.45rem);
   font-weight: 500;
@@ -424,7 +467,6 @@ html[data-motion='off'] .keypad-visible {
   user-select: none;
   -webkit-user-select: none;
   -webkit-tap-highlight-color: transparent;
-  will-change: transform, background-color, box-shadow;
   transition: transform var(--dur-fast) var(--ease-out),
     background-color var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out),
     box-shadow var(--dur-fast) var(--ease-out);
@@ -432,12 +474,18 @@ html[data-motion='off'] .keypad-visible {
 .key:hover {
   background: var(--key-hover);
   transform: translateY(-1px);
-  box-shadow: var(--shadow-2);
+  box-shadow:
+    var(--shadow-2),
+    inset 0 1px 0 rgb(255 255 255 / 0.25),
+    0 4px 0 rgb(0 0 0 / 0.17);
 }
+/* 按下 = 实体键程走完：下沉 3px、键帽厚度收扁、高光变内阴影 */
 .key:active {
-  transform: scale(0.95);
-  filter: brightness(0.96);
-  box-shadow: var(--shadow-1);
+  transform: translateY(3px) scale(0.99);
+  filter: brightness(0.97);
+  box-shadow:
+    0 1px 0 rgb(0 0 0 / 0.17),
+    inset 0 2px 5px rgb(0 0 0 / 0.16);
 }
 /* 光标移动键：视觉上比运算键略轻，但仍归入 op 配色 */
 .key-move {

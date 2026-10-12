@@ -31,6 +31,7 @@ const SIMPLE_STRIP: KeyDef[] = [
   { label: 'π', action: { t: 'ins', text: 'π' }, cls: 'fn', title: '圆周率' },
   { label: '°', action: { t: 'ins', text: '°' }, cls: 'fn', title: '角度符号' },
   { label: '%', action: { t: 'ins', text: '%' }, cls: 'fn', title: '百分比' },
+  { label: 'Ans', action: { t: 'ans' }, cls: 'fn', title: '上一次的结果' },
 ]
 
 /** 学科面板类型 */
@@ -77,6 +78,7 @@ const MATH_GROUPS: Array<{ id: string; label: string; keys: KeyDef[] }> = [
       { label: '!', action: { t: 'ins', text: '!' }, title: '阶乘' },
       { label: 'C(n,r)', action: { t: 'func', name: 'ncr' }, title: '组合数' },
       { label: 'A(n,r)', action: { t: 'func', name: 'npr' }, title: '排列数' },
+      { label: 'Ans', action: { t: 'ans' }, title: '上一次的结果' },
       { label: '(', action: { t: 'ins', text: '(' }, title: '左括号' },
       { label: ')', action: { t: 'ins', text: ')' }, title: '右括号' },
     ],
@@ -247,7 +249,7 @@ const GRID: KeyDef[] = [
 
   { label: '0', action: { t: 'ins', text: '0' } },
   { label: '.', action: { t: 'ins', text: '.' } },
-  { label: 'Ans', action: { t: 'ans' }, cls: 'op', title: '使用上次结果' },
+  { label: '+', action: { t: 'ins', text: '+' }, cls: 'op', title: '加' },
   { label: '=', action: { t: 'eq' }, cls: 'eq', title: '计算' },
 ]
 

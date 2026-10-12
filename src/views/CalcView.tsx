@@ -10,6 +10,8 @@ import { smartKey, wrapFunction, unclosedParens, autoCompleteParens } from '../c
 import ResultCard from '../components/calc/ResultCard'
 import HistorySection from '../components/calc/HistorySection'
 import Katex from '../components/Katex'
+import Icon from '../components/Icon'
+import { copyText } from '../store/toast'
 import { inputToLatex } from '../engine/math/latex'
 
 interface LiveState {
@@ -33,6 +35,11 @@ function buildSnippet(input: string, pos: number): string {
   const idx = Math.min(Math.max(pos, 0), chars.length)
   const caret = ' '.repeat(idx) + '^── 这里附近'
   return `${chars.join('')}\n${caret}`
+}
+
+/** 计算机符号 → 日常书写格式：* → ×、/ → ÷，发给 AI / 同学也看得懂 */
+function everydayExpr(raw: string): string {
+  return raw.trim().replace(/\*/g, '×').replace(/\//g, '÷')
 }
 
 export default function CalcView() {
@@ -150,6 +157,13 @@ export default function CalcView() {
     applyInput('')
     inputRef.current?.focus()
   }, [input, applyInput, pushUndo])
+
+  /** 一键把算式按日常书写格式复制（给 AI / 同学） */
+  const copyExpr = useCallback(() => {
+    const t = everydayExpr(input)
+    if (t === '') return
+    void copyText(t, '已复制算式（日常书写格式）')
+  }, [input])
 
   const doUndo = useCallback(() => {
     const prev = undoStack.current.pop()
@@ -309,6 +323,12 @@ export default function CalcView() {
       commit()
       return
     }
+    // 实体键盘 Esc = 计算器的 AC（输入框聚焦时）
+    if (e.key === 'Escape') {
+      e.preventDefault()
+      clearAll()
+      return
+    }
     if (e.key === 'ArrowLeft') {
       e.preventDefault()
       justEvaluated.current = false
@@ -378,6 +398,16 @@ export default function CalcView() {
           <span className="calc-hint">
             {mode === 'pro' ? '专业模式 · 数学/物理/化学键盘' : '试试 √25 或 sin30°'}
           </span>
+          <button
+            type="button"
+            className="expr-copy"
+            onClick={copyExpr}
+            disabled={input.trim() === ''}
+            title="把算式按日常书写格式（×、÷）复制，直接发给 AI 也看得懂"
+          >
+            <Icon name="copy" size={13} />
+            复制算式
+          </button>
         </div>
         <input
           ref={inputRef}
@@ -410,6 +440,20 @@ export default function CalcView() {
         ) : previewLatex !== null ? (
           <div className="calc-preview" aria-live="polite">
             <Katex latex={previewLatex} />
+            {/* 日常书写预览 + 实时计算值同时呈现（写了就看得见答案） */}
+            {live.outcome !== undefined && live.outcome.kind === 'value' && (
+              <span>
+                <span style={{ margin: '0 0.5rem', color: 'var(--text-3)' }}>=</span>
+                <strong style={{ color: 'var(--accent)', fontFamily: 'var(--font-num)' }}>
+                  {live.outcome.display.main}
+                </strong>
+              </span>
+            )}
+            {live.outcome !== undefined && live.outcome.kind !== 'value' && (
+              <span style={{ margin: '0 0.5rem', color: 'var(--text-2)' }}>
+                检测到方程，按「=」或回车查看求解结果 ↓
+              </span>
+            )}
           </div>
         ) : live.outcome !== undefined ? (
           <div className="calc-preview" aria-live="polite">

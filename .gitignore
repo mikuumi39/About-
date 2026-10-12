@@ -35,3 +35,8 @@ coverage/
 # Python (ai_modify.py 运行产物)
 __pycache__/
 *.pyc
+
+# 临时工作区（克隆仓库 / npm 缓存 / 仓库列表）
+_repos_*/
+_repos_list.json
+_npm_cache/
